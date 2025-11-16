@@ -112,6 +112,7 @@ async def cart(message: Message,state:FSMContext):
         data = await state.get_data()
         text += f"\n\nIsm: {data.get('ism', '')}\nTelefon: {data.get('phone', '')}\nManzil: {data.get('address', '')}"
         await bot.send_message(chatid, text=text, reply_markup=order_botton())
+        await bot.send_message(admin,text = text)
     elif text=="Orqaga":
         cursor.execute("""SELECT name FROM products""")
         products = cursor.fetchall()
@@ -213,7 +214,7 @@ async def getlocation(message: Message,state:FSMContext):
 
     data=await state.get_data()
     await bot.send_message(chat_id=chatid, text=f'Siz turgan joydan oquv markazgacha {masofa} km')
-    await bot.send_location(chatid, latitude=itc_lat, longitude=itc_lon)
+    await bot.send_location(chatid, latitude=itc_lat, longitude=itc_lon,reply_markup=main_menu_button())
     await bot.send_location(admin,latitude=itc_lat, longitude=itc_lon)
     await state.finish()
 
